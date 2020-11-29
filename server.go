@@ -1,6 +1,9 @@
 package main
 
 import (
+	"bot-for-website/bot"
+	"bot-for-website/database"
+	"encoding/json"
 	"net/http"
 )
 
@@ -9,7 +12,11 @@ func getPort() (string, error) {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello"))
+	var form database.Form
+	_ = json.NewDecoder(r.Body).Decode(&form)
+	go bot.SendForm(form)
+	go database.AddToDB(form)
+	w.WriteHeader(200)
 }
 
 func StartServer() error {

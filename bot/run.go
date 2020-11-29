@@ -6,6 +6,8 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
+var Bot *tgbotapi.BotAPI
+
 var ids = []int{157111809, 155890995}
 
 const chatID = -429497294
@@ -19,29 +21,26 @@ func checkForIDs(id int) bool {
 	return false
 }
 
-func SendMessage(bot *tgbotapi.BotAPI, line string) {
+func SendMessage(line string) {
 	msg := tgbotapi.NewMessage(chatID, line)
-	bot.Send(msg)
+	Bot.Send(msg)
 }
 
 func Run(token string) error {
 
-	fmt.Println("Hello")
-	bot, err := tgbotapi.NewBotAPI(token)
-	if err != nil {
-		return err
-	}
+	Bot, _ = tgbotapi.NewBotAPI(token)
 
-	bot.Debug = true
+	Bot.Debug = false
 
-	fmt.Printf("Authorized on account %s", bot.Self.UserName)
+	fmt.Printf("Authorized on account %s\n", Bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 
-	updates, err := bot.GetUpdatesChan(u)
+	updates, _ := Bot.GetUpdatesChan(u)
 
 	for update := range updates {
+		fmt.Println()
 		if update.Message == nil { // ignore any non-Message Updates
 			continue
 		}
@@ -49,14 +48,6 @@ func Run(token string) error {
 		if !checkForIDs(update.Message.From.ID) {
 			continue
 		}
-
-		SendMessage(bot, "Аркаша пидрила")
-		// log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
-
-		// msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
-		// msg.ReplyToMessageID = update.Message.MessageID
-
-		// bot.Send(msg)
 	}
 
 	return nil

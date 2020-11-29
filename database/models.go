@@ -1,4 +1,4 @@
-package main
+package database
 
 type Form struct {
 	Service  string    `json:"service"`
