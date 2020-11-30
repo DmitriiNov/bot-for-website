@@ -41,7 +41,7 @@ func Run(token string) error {
 
 	for update := range updates {
 		fmt.Println()
-		if update.Message == nil { // ignore any non-Message Updates
+		if update.Message == nil {
 			continue
 		}
 
