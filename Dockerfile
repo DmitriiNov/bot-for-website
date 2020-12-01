@@ -1,5 +1,8 @@
 FROM golang:1.15
-RUN apt-get update && apt-get install sqlite
+
+RUN apt-get update && apt-get install -y sqlite
+
+COPY botdb.db .
 
 RUN mkdir /app
 

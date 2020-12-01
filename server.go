@@ -8,7 +8,7 @@ import (
 )
 
 func getPort() (string, error) {
-	return "1234", nil
+	return "8080", nil
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -25,6 +25,7 @@ func StartServer() error {
 	if err != nil {
 		return err
 	}
+	database.StartDB()
 	http.HandleFunc("/request", handler)
 	go http.ListenAndServe(":"+port, nil)
 	return nil
