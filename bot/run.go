@@ -30,7 +30,7 @@ func Run(token string) error {
 
 	Bot, _ = tgbotapi.NewBotAPI(token)
 
-	Bot.Debug = false
+	Bot.Debug = true
 
 	fmt.Printf("Authorized on account %s\n", Bot.Self.UserName)
 
@@ -47,6 +47,12 @@ func Run(token string) error {
 
 		if !checkForIDs(update.Message.From.ID) {
 			continue
+		}
+
+		if update.Message.Text == "/last10" {
+			go SendLast10()
+		} else if update.Message.Text == "/db" {
+			go SendSQLiteDB()
 		}
 	}
 
