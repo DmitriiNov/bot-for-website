@@ -14,10 +14,10 @@ func SendLast10() {
 	}
 	line := ""
 	for i, v := range forms {
-		line += "----------"
-		line += "ID: " + strconv.Itoa(ids[i])
+		line += "----------\n"
+		line += "ID: " + strconv.Itoa(ids[i]) + "\n"
 		line += PrepareForm(v)
-		line += "----------"
+		line += "----------\n"
 	}
 	SendMessage(line)
 }

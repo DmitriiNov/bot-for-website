@@ -30,7 +30,7 @@ func Run(token string) error {
 
 	Bot, _ = tgbotapi.NewBotAPI(token)
 
-	Bot.Debug = true
+	Bot.Debug = false
 
 	fmt.Printf("Authorized on account %s\n", Bot.Self.UserName)
 
