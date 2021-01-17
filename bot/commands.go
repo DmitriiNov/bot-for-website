@@ -4,6 +4,8 @@ import (
 	"bot-for-website/database"
 	"fmt"
 	"strconv"
+
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 func SendLast10() {
@@ -29,6 +31,10 @@ func SendSQLiteDB() {
 func SendForm(form database.Form) {
 	line := PrepareForm(form)
 	SendMessage(line)
+	for _, v := range form.FileInfo {
+		file := tgbotapi.FileBytes{Name: v.Name, Bytes: v.Data.Data}
+		SendFile(file)
+	}
 }
 
 func PrepareForm(form database.Form) (line string) {

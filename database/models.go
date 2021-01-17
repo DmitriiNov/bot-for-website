@@ -5,7 +5,7 @@ type Form struct {
 	Name     string    `json:"name"`
 	Info     string    `json:"info"`
 	Contacts []Contact `json:"contacts"`
-	FileInfo File      `json:"file"`
+	FileInfo []File    `json:"file"`
 }
 
 type Contact struct {
@@ -15,5 +15,10 @@ type Contact struct {
 
 type File struct {
 	Name string `json:"name"`
-	Data string `json:"data"`
+	Data Data   `json:"data"`
+}
+
+type Data struct {
+	Type string `json:"type"`
+	Data []byte `json:"data"`
 }

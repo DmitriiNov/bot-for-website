@@ -26,6 +26,10 @@ func SendMessage(line string) {
 	Bot.Send(msg)
 }
 
+func SendFile(file tgbotapi.FileBytes) {
+	Bot.Send(tgbotapi.NewDocumentUpload(chatID, file))
+}
+
 func Run(token string) error {
 
 	Bot, _ = tgbotapi.NewBotAPI(token)
