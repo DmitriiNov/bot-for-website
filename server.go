@@ -28,6 +28,20 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 }
 
+func handlercv(w http.ResponseWriter, r *http.Request) {
+	var form database.Form
+	bodyb, _ := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	err := json.Unmarshal(bodyb, &form)
+	if err != nil {
+		fmt.Println(err.Error())
+		w.WriteHeader(200)
+		return
+	}
+	go bot.SendForm(form)
+	w.WriteHeader(200)
+}
+
 func StartServer() error {
 
 	port, err := getPort()
@@ -36,6 +50,7 @@ func StartServer() error {
 	}
 	database.StartDB()
 	http.HandleFunc("/request", handler)
+	http.HandleFunc("/requestcv", handlercv)
 	go http.ListenAndServe(":"+port, nil)
 	return nil
 }
